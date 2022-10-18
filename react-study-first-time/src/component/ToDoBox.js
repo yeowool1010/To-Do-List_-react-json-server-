@@ -2,11 +2,21 @@ import React from 'react'
 import styled from 'styled-components';
 import ToDoList from './ToDoList';
 
+const ToDoListBox = styled.div`
+    
+    .todo-ul {
+        list-style: none;
+        display: flex;
+        flex-flow: column;
+        align-items: baseline;
+    }
+`
+
 const ToDoBox = (data) => {
 console.log(data)
     return (
-        <div>
-            < ul >
+        <ToDoListBox>
+            <ul className='todo-ul' >
                 {data.todos.map((todo) => (
 
                     <ToDoList
@@ -18,7 +28,7 @@ console.log(data)
                 ))
                 }
             </ul>
-        </div>
+        </ToDoListBox>
     )
 }
 

@@ -1,10 +1,30 @@
 import React from 'react'
 import styled from 'styled-components';
 
+const Done =styled.div `
+    .done {
+        color: gray;
+    }
+    .not-done {
+        color: black;
+        font-weight: 600;
+    }
+
+    .delete-btn {
+        background-color: beige;
+        transition: all ease 0.3s 0s;
+        border: 0ch;
+        border-radius: 50%;
+    }
+    .delete-btn:hover {
+        background-color: pink;
+    }
+`
+
 const ToDoList = (data) => {
 
     return (
-        <div>
+        <Done>
             <li key={data.todo.id}>
                 <input
                     type="checkbox"
@@ -17,15 +37,15 @@ const ToDoList = (data) => {
                 </span>
                 <span className="delete-todo">
                     <button
-                        className="btn btn-danger btn-sm"
+                        className="delete-btn"
                         onClick={(event) => data.removeTodo()}
                     >
-                        x
+                        &#x274E;
                     </button>
                 </span>
             </li>
 
-        </div>
+        </Done>
     )
 }
 

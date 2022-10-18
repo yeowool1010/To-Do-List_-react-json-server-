@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import './App.css';
 
 import Header from './component/Header';
@@ -45,6 +46,61 @@ export class App extends Component {
     })
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault()
+
+    axios.post(`http://localhost:3001/todos`, {
+      title: this.state.newTodo,
+      done: false
+    })
+      .then(res => {
+        // console.log(res.data);
+        this.setState({
+          newTodo: '',
+          todos: [
+            ...this.state.todos,
+            {
+              title: res.data.title,
+              done: res.data.done,
+              id: res.data.id
+            }
+          ]
+        })
+      })
+  }
+
+  toggleTodoDone = (id, status) => {
+    // // Delete data from backend 
+    axios.patch(`http://localhost:3001/todos/${id}`, {
+      done: !status
+    }).then(res => {
+      this.fetchTodos()
+    })
+
+  };
+
+  removeTodo = id => {
+    const todos = this.state.todos.filter(item => item.id !== id);
+    this.setState({ todos });
+
+    axios.delete(`http://localhost:3001/todos/${id}`)
+      .then(res => {
+        console.log(res.data);
+
+      })
+  };
+
+  allDone = (event) => {
+    const todos = this.state.todos.map(todo => {
+      return {
+        ...todo,
+        done: true
+      }
+    })
+    this.setState({
+      todos
+    })
+  }
 
   render() {
     return (
@@ -60,7 +116,17 @@ export class App extends Component {
         />
         <ToDoBox
           todos={this.state.todos}
+          removeTodo={this.removeTodo}
+          toggleTodoDone={this.toggleTodoDone}
         />
+        <Btn>
+          <button
+            className='button btnPush btnLightBlue'
+            onClick={this.allDone}  
+          >
+            사격 완료!
+          </button>
+        </Btn>
         </body>
         <footer>
           <Footer/>
@@ -71,3 +137,35 @@ export class App extends Component {
 }
 
 export default App;
+
+const Btn = styled.div `
+    .button {
+        /* display: block; */
+        /* position: relative; */
+        /* float: left; */
+        border: 0ch;
+        cursor: pointer;
+        width: 120px;
+        padding: 0;
+        margin: 10px 20px 10px 0;
+        font-weight: 600;
+        text-align: center;
+        /* line-height: 50px; */
+        color: #FFF;
+        border-radius: 5px;
+        transition: all 0.2s ;
+    }
+    .btnLightBlue {
+      background: #5DC8CD;
+    }
+    .btnLightBlue.btnPush {
+         box-shadow: 0px 5px 0px 0px #1E8185;
+    }
+    .btnPush:hover {
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+    .btnLightBlue.btnPush:hover {
+  box-shadow: 0px 0px 0px 0px #1E8185;
+}
+`
