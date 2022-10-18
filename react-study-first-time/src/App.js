@@ -6,11 +6,46 @@ import CreateToDo from './component/CreateToDo';
 import ToDoBox from './component/ToDoBox';
 import Footer from './component/Footer';
 
-// import axios from 'axios'
+import axios from 'axios'
 
 
 
-class App extends Component {
+export class App extends Component {
+  state = {
+    newTodo: '',
+    todos: [
+      {
+        id: '',
+        title: '',
+        done: false
+      }
+    ]
+  }
+
+  fetchTodos = () => {
+    axios.get(`http://localhost:3001/todos`)
+      .then(res => {
+        const todos = res.data;
+        this.setState({
+          ...todos,
+          todos
+        });
+      })
+  }
+
+  componentDidMount() {
+    this.fetchTodos()
+  }
+
+  handleOnChange = (event) => {
+    console.log(event.target.value)
+    this.setState({
+      newTodo: event.target.value,
+      // id: event.target.value
+    })
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -18,9 +53,14 @@ class App extends Component {
           <Header/>
         </header>
         <body>
-        <CreateToDo>
-          <ToDoBox/>
-        </CreateToDo>
+        <CreateToDo
+          handleSubmit={this.handleSubmit}
+          handleOnChange={this.handleOnChange}
+          newTodoValue={this.state.newTodo}
+        />
+        <ToDoBox
+          todos={this.state.todos}
+        />
         </body>
         <footer>
           <Footer/>

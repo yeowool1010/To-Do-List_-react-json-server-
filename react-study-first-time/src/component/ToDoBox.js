@@ -3,11 +3,22 @@ import styled from 'styled-components';
 import ToDoList from './ToDoList';
 
 const ToDoBox = (data) => {
-
+console.log(data)
     return (
-        <>
-        <p>투두 리스트 들어간 compoent</p>
-        </>
+        <div>
+            < ul >
+                {data.todos.map((todo) => (
+
+                    <ToDoList
+                        key={todo.id}
+                        todo={todo}
+                        toggleTodoDone={() => data.toggleTodoDone(todo.id, todo.done)}
+                        removeTodo={() => data.removeTodo(todo.id)}
+                    />
+                ))
+                }
+            </ul>
+        </div>
     )
 }
 

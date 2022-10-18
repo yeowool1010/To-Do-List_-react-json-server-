@@ -15,11 +15,24 @@ const ToDoFrom =styled.div`
 `
 
 const CreateToDo = (data) => {
-
+    // console.log(data)
     return (
         <ToDoFrom>
-            <div className='to-do-from'>
-                투두 리스트 폼 들어가는 곳
+            <div className='to-do-from'
+                onSubmit={(event) => data.handleSubmit(event)}
+            >
+                <div>
+                    <label htmlFor="">Enter Todo</label>
+                    <input 
+                        className=''
+                        type="text"
+                        name='todo'
+                        id='todo'
+                        value={data.newTodoValue}
+                        onChange={(event) => data.handleOnChange(event)}
+                        />
+                </div>
+                <button className="submit-btn" type="submit">ToDo 장전</button>
             </div>
         </ToDoFrom>
     )
