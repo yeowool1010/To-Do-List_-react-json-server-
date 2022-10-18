@@ -20,6 +20,12 @@ const FooterBox = styled.div`
         color: blueviolet;
         font-weight: 700;
     }
+    .text1 {
+        margin: 10px;
+        color: red;
+        font-weight: 700;
+        
+    }
 `
 
 const Footer = () => {
@@ -27,6 +33,9 @@ const Footer = () => {
     return (
         <FooterBox>
             <div className='textBox'>
+                <div className='text1'>
+                    json server localhost:3001 설정必
+                </div>
                 <div className='text'>
                     안녕하세요 여울의 투두두두 리스트입니다
                     울면서 만들었습니다. &#x1F602;
