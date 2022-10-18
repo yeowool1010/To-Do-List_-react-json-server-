@@ -11,7 +11,8 @@ import axios from 'axios'
 
 
 
-export class App extends Component {
+class App extends Component {
+  
   state = {
     newTodo: '',
     todos: [
@@ -27,6 +28,7 @@ export class App extends Component {
     axios.get(`http://localhost:3001/todos`)
       .then(res => {
         const todos = res.data;
+        // console.log(todos)
         this.setState({
           ...todos,
           todos
@@ -39,7 +41,7 @@ export class App extends Component {
   }
 
   handleOnChange = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     this.setState({
       newTodo: event.target.value,
       // id: event.target.value
@@ -52,9 +54,11 @@ export class App extends Component {
     axios.post(`http://localhost:3001/todos`, {
       title: this.state.newTodo,
       done: false
-    })
+    }
+    ,{headers: { "Content-Type": `application/json`}}
+    )
       .then(res => {
-        // console.log(res.data);
+        console.log(res.data);
         this.setState({
           newTodo: '',
           todos: [
@@ -67,10 +71,13 @@ export class App extends Component {
           ]
         })
       })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   toggleTodoDone = (id, status) => {
-    // // Delete data from backend 
+
     axios.patch(`http://localhost:3001/todos/${id}`, {
       done: !status
     }).then(res => {
@@ -85,7 +92,7 @@ export class App extends Component {
 
     axios.delete(`http://localhost:3001/todos/${id}`)
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
 
       })
   };
@@ -104,11 +111,12 @@ export class App extends Component {
 
   render() {
     return (
+      <>
       <div className="App">
         <header>
           <Header/>
         </header>
-        <body>
+        <div>
         <CreateToDo
           handleSubmit={this.handleSubmit}
           handleOnChange={this.handleOnChange}
@@ -127,11 +135,12 @@ export class App extends Component {
             사격 완료!
           </button>
         </Btn>
-        </body>
+        </div>
         <footer>
           <Footer/>
         </footer>
       </div>
+      </>
     );
   }
 }

@@ -9,6 +9,7 @@ const ToDoFrom =styled.div`
     /* background-color: aqua; */
 
     .to-do-from {
+        cursor: pointer;
         display: flex;
         width : 100%;
         height: 100%;
@@ -54,9 +55,7 @@ const CreateToDo = (data) => {
     // console.log(data)
     return (
         <ToDoFrom>
-            <div className='to-do-from'
-                onSubmit={(event) => data.handleSubmit(event)}
-            >
+            <from className='to-do-from'>
                 <div>
                     <label htmlFor="">오늘의 총알</label>
                     <input 
@@ -68,8 +67,14 @@ const CreateToDo = (data) => {
                         onChange={(event) => data.handleOnChange(event)}
                         />
                 </div>
-                <button className="button btnPush btnLightBlue" type="submit">ToDo 장전</button>
-            </div>
+                <button 
+                    className="button btnPush btnLightBlue" 
+                    type="submit"
+                    onClick={(event) => data.handleSubmit(event)}
+                    >
+                        ToDo 장전
+                </button>
+            </from>
         </ToDoFrom>
     )
 }

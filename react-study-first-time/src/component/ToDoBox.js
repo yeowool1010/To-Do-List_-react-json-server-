@@ -13,7 +13,7 @@ const ToDoListBox = styled.div`
 `
 
 const ToDoBox = (data) => {
-console.log(data)
+// console.log(data)
     return (
         <ToDoListBox>
             <ul className='todo-ul' >
